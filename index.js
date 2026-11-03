@@ -27,7 +27,15 @@ const connectClient = await connectToMongoDB();
 const db = connectClient.db("studios-spce");
 const studioCollection = db.collection("studio");
 
-
+// 1. Get all studios
+app.get('/studio', async (req, res) => {
+  try {
+    const result = await studioCollection.find().toArray();
+    res.send(result);
+  } catch (error) {
+    res.status(500).send({ message: "Failed to fetch studios", error });
+  }
+});
 
 
 // 2. Create / Add New Studio (POST API)
